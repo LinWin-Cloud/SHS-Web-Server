@@ -3,19 +3,18 @@ package main;
 
 import HttpService.HttpService;
 
-import java.io.IOException;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.text.SimpleDateFormat;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
     public static int boot_number = 0;
     public static int port = 0;
     public static String IP;
     public static SimpleJson Http_Service_Config = new SimpleJson();
-    public static HttpService httpService = new HttpService()
+    public static HttpService httpService = new HttpService();
+    public static ExecutorService executorService = Executors.newFixedThreadPool(10000);
 
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
