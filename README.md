@@ -1,30 +1,24 @@
 # Start Http Server
 
 #### 介绍
-Start Http Server Web服务器系统
+Start Http Server Web服务器系统，高性能、高并发、高效率。支持Windows、Linux、docker等，同样，也可以在replit这些云环境内部署运行，采用Java作为开发语言，稳定安全高效。
+包括了http服务器模块、反向代理服务器模块、快速网站调试模块。部署简单，高效，支持可视化管理运行。
 
 #### 软件架构
-软件架构说明
+##### Linux运行环境提供支持
+1. amd64
+
+#### Windows运行环境支持
+1. x64
+
+#### 其他支持
+如果不是以上的任何架构，那么可以采用更换jre的操作来进行各个平台的适配
 
 
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+#### 参与贡献的人员
+1. Linwin-Cloud
+2. zmh-program
+3. ChatGPT-4
 
 
 #### 特技
