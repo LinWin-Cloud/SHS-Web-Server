@@ -10,6 +10,7 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.net.URLDecoder;
 
@@ -60,6 +61,8 @@ public class HttpService {
                     requests.substring(0,requests.indexOf(" ")).toLowerCase();
             String Url =
                     requests.substring(requests.indexOf(" ")+1,requests.lastIndexOf("HTTP/")-1);
+            Url = Url.replaceAll("//","/");
+
             if (Method.equals("get"))
             {
                 if (Url.equals("/"))
@@ -71,19 +74,27 @@ public class HttpService {
                         if (index_file.exists() && index_file.isFile())
                         {
                             isIndex = true;
-
+                            this.sendFile(Main.HtmlPath+"/"+index_file.getName(),socket,200);
+                            break;
                         }
                     }
                     if (!isIndex) {
-
+                        this.SendListOfDir(printWriter,socket,"/");
+                        return;
                     }
+                    return;
+                }
+                else {
+                    this.SendListOfDir(printWriter,socket,Url);
+                    return;
                 }
             }
             if (Method.equals("post"))
             {
-
+                System.out.println(2);
             }
             else {
+                System.out.println(1);
                 this.SendErrTitle(printWriter,socket);
                 return;
             }
@@ -98,15 +109,48 @@ public class HttpService {
             }
         }
     }
+    public void SendListOfDir(PrintWriter printWriter,Socket socket,String url)
+    throws Exception{
+        File file = new File(Main.HtmlPath+"/"+url);
+        if (file.isDirectory()) {
+            printWriter.println("HTTP/1.1 200 OK");
+            printWriter.println("Content-Type: text/html");
+            printWriter.println("Server: "+Main.ServerName);
+            printWriter.println();
+            printWriter.flush();
+            printWriter.println("<h1>IndexOf: "+url+"</h1>");
+            printWriter.println("<a href='../'>Back</a><br />");
+            for (File file_project: Objects.requireNonNull(file.listFiles())) {
+                if (file_project.isDirectory()) {
+                    printWriter.println("<a href='"+file_project.getName()+"/'><f style='color: black'>Directory: <f>"+file_project.getName()+"</a><br />");
+                    printWriter.flush();
+                }
+                else {
+                    printWriter.println("<a href='"+file_project.getName()+"'><f style='color: black'>File: <f>"+file_project.getName()+"</a><br />");
+                }
+            }
+            printWriter.flush();
+            socket.close();
+        }
+        else {
+            this.sendFile("../default/error/404.html",socket,404);
+        }
+    }
     public void SendErrTitle(PrintWriter printWriter,Socket socket) throws Exception {
         printWriter.println("HTTP/1.1 400 OK");
         printWriter.println("Content-Type: text/html");
         printWriter.println("Server: "+Main.ServerName);
         printWriter.println();
         printWriter.flush();
-        this.sendFile("../default/error/400.html",socket);
+        this.sendFile("../default/error/400.html",socket,400);
     }
-    private void sendFile(String url, Socket socket) throws Exception {
+    private void sendFile(String url, Socket socket,int code) throws Exception {
+        printWriter.println("HTTP/1.1 "+String.valueOf(code)+" OK");
+        printWriter.println("Content-Type: text/html");
+        printWriter.println("Server: "+Main.ServerName);
+        printWriter.println();
+        printWriter.flush();
+
         FileChannel channel = FileChannel.open(Paths.get(url), StandardOpenOption.READ);
         ByteBuffer buf = ByteBuffer.allocate(5);
         while(channel.read(buf)!=-1){
