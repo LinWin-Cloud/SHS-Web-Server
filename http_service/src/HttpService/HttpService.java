@@ -46,9 +46,9 @@ public class HttpService {
             BufferedReader bufferedReader = new BufferedReader(
                     new InputStreamReader(inputStream)
             );
-            while (true) {
-                String line = bufferedReader.readLine();
-            }
+            String url = bufferedReader.readLine();
+
+
         }
         catch (Exception exception) {
             try {
