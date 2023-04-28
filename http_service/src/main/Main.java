@@ -3,6 +3,7 @@ package main;
 
 import HttpService.HttpService;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.Arrays;
@@ -14,6 +15,7 @@ public class Main {
     public static int boot_number = 0; 
     public static int port = 0;
     public static String IP;
+    public static String HtmlPath;
     public static SimpleJson Http_Service_Config = new SimpleJson();
     public static HttpService httpService = new HttpService();
     public static ExecutorService executorService = Executors.newFixedThreadPool(10000);
@@ -30,6 +32,12 @@ public class Main {
 
         String[] Index = Http_Service_Config.get("default").split(",");
         IndexFile.addAll(Arrays.asList(Index));
+
+        String HTML_Path = Http_Service_Config.get("html");
+        if (!new File(HTML_Path).exists()) {
+            System.out.println("[ERR] CAN NOT FIND TARGET SERVICE DIR: "+HTML_Path);
+            System.exit(1);
+        }
     }
     public static ServerSocket GetServerSocket() {
         try {
@@ -38,8 +46,7 @@ public class Main {
                 System.exit(0);
             }
             ServerSocket serverSocket =
-                    new ServerSocket(port, 50, InetAddress.getByName(IP));
-            serverSocket.close();
+                    new ServerSocket(port);
             return serverSocket;
         }
         catch (Exception exception) {

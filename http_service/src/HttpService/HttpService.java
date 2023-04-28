@@ -5,7 +5,9 @@ import main.Main;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
+import java.net.URLDecoder;
 
 public class HttpService {
     private PrintWriter printWriter;
@@ -15,25 +17,18 @@ public class HttpService {
         ServerSocket serverSocket = Main.GetServerSocket();
 
         while (true) {
-            Socket socket = null;
             try {
-                socket = serverSocket.accept();
-                Socket finalSocket = socket;
+                Socket socket = serverSocket.accept();
                 Main.executorService.submit(new Callable<Integer>() {
                     @Override
-                    public Integer call() throws Exception {
-                        http_client_service(finalSocket);
+                    public Integer call() {
+                        http_client_service(socket);
                         return 0;
                     }
                 });
             } catch (IOException e) {
-                try
-                {
-                    socket.close();
-                }
-                catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+                e.printStackTrace();
+                continue;
             }
         }
     }
@@ -46,9 +41,21 @@ public class HttpService {
             BufferedReader bufferedReader = new BufferedReader(
                     new InputStreamReader(inputStream)
             );
-            String url = bufferedReader.readLine();
+            ArrayList<String> client_title = new ArrayList<>();
+            while (true) {
+                String message = bufferedReader.readLine();
+                if (message == null || message.equals(" ") || message.equals("")) {
+                    break;
+                }
+                client_title.add(URLDecoder.decode(message,"UTF-8"));
+            }
+            String requests = client_title.get(0);
+            String Method = requests.substring(0,requests.indexOf(" "));
+            String Url = requests.substring(requests.indexOf(" ")+1,requests.lastIndexOf("HTTP/")-1);
+            printWriter.println("hello world");
+            printWriter.flush();
 
-
+            socket.close();
         }
         catch (Exception exception) {
             try {
