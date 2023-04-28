@@ -16,6 +16,7 @@ public class Main {
     public static int port = 0;
     public static String IP;
     public static String HtmlPath;
+    public static String ServerName = "LinwinSoft_SHS";
     public static SimpleJson Http_Service_Config = new SimpleJson();
     public static HttpService httpService = new HttpService();
     public static ExecutorService executorService = Executors.newFixedThreadPool(10000);
@@ -34,10 +35,11 @@ public class Main {
         IndexFile.addAll(Arrays.asList(Index));
 
         String HTML_Path = Http_Service_Config.get("html");
-        if (!new File(HTML_Path).exists()) {
+        if (!new File(HTML_Path).isDirectory()) {
             System.out.println("[ERR] CAN NOT FIND TARGET SERVICE DIR: "+HTML_Path);
             System.exit(1);
         }
+        Main.HtmlPath = HTML_Path;
     }
     public static ServerSocket GetServerSocket() {
         try {
