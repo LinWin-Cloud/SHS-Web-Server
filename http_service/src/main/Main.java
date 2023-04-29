@@ -21,6 +21,7 @@ public class Main {
     public static HttpService httpService = new HttpService();
     public static ExecutorService executorService = Executors.newFixedThreadPool(10000);
     public static HashSet<String> IndexFile = new HashSet<>();
+    public static String Charset;
 
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
@@ -40,6 +41,7 @@ public class Main {
             System.exit(1);
         }
         Main.HtmlPath = HTML_Path;
+        Main.Charset = Http_Service_Config.get("charset");
     }
     public static ServerSocket GetServerSocket() {
         try {
