@@ -7,17 +7,15 @@ import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
-import java.util.HashMap;
-import java.util.concurrent.*;
 
 class WebServiceServer {
 
-    private String HttpMethod = "GET";
-    private static String HttpUrl = "";
-    private HttpService httpService;
-
-
-    public void sendFile(String path, int code, PrintWriter printWriter, Socket socket, OutputStream outputStream) throws Exception {
+    public void sendFile(
+            String path,
+            int code,
+            PrintWriter printWriter,
+            Socket socket,
+            OutputStream outputStream) throws Exception {
 
         printWriter.println("HTTP/1.1 "+code+" OK");
         printWriter.println("Content-Type: "+new HttpFileContentType().getType(path));
@@ -27,6 +25,7 @@ class WebServiceServer {
         printWriter.flush();
 
         FileInputStream fileInputStream = new FileInputStream(path);
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
 
         FileChannel channel = fileInputStream.getChannel();
         ByteBuffer buffer = ByteBuffer.allocate(1024);
@@ -36,12 +35,13 @@ class WebServiceServer {
         {
             byte[] bytes = buffer.array();
             buffer.clear();
-            outputStream.write(bytes);
-            outputStream.flush();
+            bufferedOutputStream.write(bytes,0,length);
+            bufferedOutputStream.flush();
         }
 
         channel.close();
         outputStream.close();
+        bufferedOutputStream.close();
         socket.close();
         printWriter.close();
         fileInputStream.close();
@@ -126,8 +126,6 @@ class WebServiceServer {
             OutputStream outputStream,
             BufferedReader bufferedReader,
             String httpUrl) throws Exception {
-
-        HttpUrl = httpUrl;
         try
         {
             String Http = httpUrl;
@@ -140,12 +138,28 @@ class WebServiceServer {
             // System.out.println(path+";");
 
             File RequestsPath = new File(path);
+            if (RequestsPath.equals("/")) {
+                for (String i : Main.IndexFile)
+                {
+                    File file1 = new File(path+"/"+i);
+                    if (file1.exists() && file1.isFile())
+                    {
+                        try{
+                            sendFile(file1.getAbsolutePath(),200,printWriter,socket,outputStream);
+                        }catch (Exception exception)
+                        {
+                            this.sendFile(Main.ERROR_Page+"/500.html",500,printWriter,socket,outputStream);
+                        }
+                        break;
+                    }
+                }
+            }
             if (RequestsPath.exists() && RequestsPath.isFile()) {
                 sendFile(path, 200, printWriter, socket, outputStream);
             } else if (RequestsPath.exists() && RequestsPath.isDirectory()) {
                 sendDirectory(path, 200, printWriter, socket, outputStream);
             } else {
-                sendErrorPage(404, printWriter, socket, outputStream);
+                this.sendFile(Main.ERROR_Page+"/404.html",404,printWriter,socket,outputStream);
             }
             bufferedReader.close();
         }

@@ -1,6 +1,7 @@
 package main;
 
 
+import HttpService.HTML.VirtualContent;
 import HttpService.HttpService;
 
 import java.io.File;
@@ -23,6 +24,7 @@ public class Main {
     public static ExecutorService executorService = Executors.newFixedThreadPool(1000);
     public static HashSet<String> IndexFile = new HashSet<>();
     public static String Charset;
+    public static VirtualContent virtualContent = new VirtualContent();
 
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
@@ -50,5 +52,7 @@ public class Main {
             System.exit(1);
         }
         Main.ERROR_Page = error_page;
+
+        virtualContent.load(new File(HTML_Path));
     }
 }

@@ -51,6 +51,7 @@ public class WebServer {
         WebServer.getServerSocket(Main.port);
         ServerSocket serverSocket = new ServerSocket();
         serverSocket.bind(new InetSocketAddress(Main.IP,Main.port));
+        System.out.println(" [INFO] START WEB SERVER ["+Main.port+"]");
 
         for (int i = 0 ; i < 5 ; i++) {
             Thread thread = new Thread(new Runnable() {
@@ -105,9 +106,9 @@ public class WebServer {
                 String httpMethod = httpUrl.substring(0,httpUrl.indexOf(" ")).toLowerCase();
                 httpUrl = httpUrl.substring(httpUrl.indexOf(" ")+1,httpUrl.lastIndexOf("HTTP/")-1);
 
-                if (httpMethod.equals(""))
-
+                if (httpMethod.equals("get")) {
                     WebServer.FutureEXE(socket,printWriter,outputStream,bufferedReader,httpUrl);
+                }
             }catch (Exception exception) {
                 WebServiceServer webServiceServer = new WebServiceServer();
                 webServiceServer.sendFile(Main.ERROR_Page+"/400.html",400,printWriter,socket,outputStream);
