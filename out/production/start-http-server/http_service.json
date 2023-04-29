@@ -3,5 +3,6 @@
   "IP": "127.0.0.1",
   "default": "index.html,index.htm",
   "html": "/usr/www/html/",
-  "charset": "utf-8"
+  "charset": "utf-8",
+  "error_page": "../default/error/"
 }
