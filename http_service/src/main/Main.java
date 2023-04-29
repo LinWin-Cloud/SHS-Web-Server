@@ -19,7 +19,7 @@ public class Main {
     public static String ServerName = "LinwinSoft_SHS";
     public static SimpleJson Http_Service_Config = new SimpleJson();
     public static HttpService httpService = new HttpService();
-    public static ExecutorService executorService = Executors.newFixedThreadPool(10000);
+    public static ExecutorService executorService = Executors.newFixedThreadPool(100);
     public static HashSet<String> IndexFile = new HashSet<>();
     public static String Charset;
 
