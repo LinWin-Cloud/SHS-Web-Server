@@ -2,5 +2,6 @@
   "port": "8888",
   "IP": "127.0.0.1",
   "default": "index.html,index.htm",
-  "html": "/usr/www/html/"
+  "html": "/usr/www/html/",
+  "charset": "utf-8"
 }
