@@ -16,20 +16,8 @@ class WebServiceServer {
     private static String HttpUrl = "";
     private HttpService httpService;
 
-    public String getHttpUrl()
-    {
-        return this.HttpUrl;
-    }
-    public String getHttpMethod()
-    {
-        return this.HttpMethod;
-    }
-    public HttpService getHttpService()
-    {
-        return this.httpService;
-    }
 
-    public static void sendFile(String path, int code, PrintWriter printWriter, Socket socket, OutputStream outputStream) throws Exception {
+    public void sendFile(String path, int code, PrintWriter printWriter, Socket socket, OutputStream outputStream) throws Exception {
 
         printWriter.println("HTTP/1.1 "+code+" OK");
         printWriter.println("Content-Type: "+new HttpFileContentType().getType(path));
@@ -55,19 +43,18 @@ class WebServiceServer {
         channel.close();
         outputStream.close();
         socket.close();
+        printWriter.close();
         fileInputStream.close();
     }
-    public static void sendDirectory(String path, int code, PrintWriter printWriter, Socket socket, OutputStream outputStream) throws IOException {
+    public void sendDirectory(
+            String path,
+            int code,
+            PrintWriter printWriter,
+            Socket socket,
+            OutputStream outputStream) throws IOException {
         try
         {
             File file = new File(path);
-
-            /**
-             * Index the Index.html or other Index HTML files in the config file.
-             * Author : openLinwin
-             * v2.3 Version Using the HashMap And Virtual Visit to read the Index File and do not
-             * Read the disk.
-             */
 
             int last1 = path.length() - 1 ;
             int end = path.length();
@@ -89,7 +76,7 @@ class WebServiceServer {
                         sendFile(file1.getAbsolutePath(),200,printWriter,socket,outputStream);
                     }catch (Exception exception)
                     {
-                        sendErrorPage(200,printWriter,socket,outputStream);
+                        this.sendFile(Main.ERROR_Page+"/500.html",500,printWriter,socket,outputStream);
                     }
                     break;
                 }
@@ -133,43 +120,12 @@ class WebServiceServer {
             socket.close();
         }
     }
-    public static void sendErrorPage(int code, PrintWriter printWriter, Socket socket, OutputStream outputStream) {
-        try
-        {
-            /**
-             * Send Error page , as 400,404,405 and so on.
-             * I was using the function: this.snedFile() , but there is a Bug in it.
-             * So must write a New function restart.
-             */
-            printWriter.println("HTTP/1.1 "+code+" OK");
-            printWriter.println("Content-Type: text/html");
-            printWriter.println("Server: "+Main.ServerName);
-            printWriter.println();
-            printWriter.flush();
-
-            FileInputStream fileInputStream = new FileInputStream(Main.ERROR_Page+"/"+code+".html");
-            int length = 0 ;
-            byte[] bytes = new byte[1024];
-            while ((length = fileInputStream.read(bytes)) != -1)
-            {
-                outputStream.write(bytes,0,length);
-                outputStream.flush();
-            }
-            outputStream.close();
-            printWriter.close();
-            socket.close();
-        }
-        catch (Exception exception){
-            try{
-                socket.close();
-            }
-            catch (Exception exception1)
-            {
-                exception1.printStackTrace();
-            }
-        }
-    }
-    public static void Service(Socket socket, PrintWriter printWriter, OutputStream outputStream, BufferedReader bufferedReader, String httpUrl) throws Exception {
+    public void Service(
+            Socket socket,
+            PrintWriter printWriter,
+            OutputStream outputStream,
+            BufferedReader bufferedReader,
+            String httpUrl) throws Exception {
 
         HttpUrl = httpUrl;
         try

@@ -3,8 +3,11 @@ package HttpService;
 import main.Main;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
@@ -46,7 +49,8 @@ public class WebServer {
     public void mainWebServer() throws Exception
     {
         WebServer.getServerSocket(Main.port);
-        ServerSocket serverSocket = new ServerSocket(Main.port);
+        ServerSocket serverSocket = new ServerSocket();
+        serverSocket.bind(new InetSocketAddress(Main.IP,Main.port));
 
         for (int i = 0 ; i < 5 ; i++) {
             Thread thread = new Thread(new Runnable() {
@@ -80,20 +84,34 @@ public class WebServer {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
             PrintWriter printWriter = new PrintWriter(outputStream);
 
-            String httpUrl = bufferedReader.readLine();
-            if (httpUrl == null){
-                socket.close();
+            ArrayList<String> HttpTitle = new ArrayList<>();
+
+            while (true) {
+                String line = bufferedReader.readLine();
+                if (line == null) {
+                    socket.close();
+                    return;
+                }
+                if (line.equals("") || line.equals(" ")) {
+                    break;
+                }
+                HttpTitle.add(line);
             }
-            httpUrl = java.net.URLDecoder.decode(httpUrl,"UTF-8");
 
-            String httpMethod = httpUrl.substring(0,httpUrl.indexOf(" "));
-            httpUrl = httpUrl.substring(httpUrl.indexOf(" ")+1,httpUrl.lastIndexOf("HTTP/")-1);
+            try {
+                String httpUrl = HttpTitle.get(0);
+                httpUrl = java.net.URLDecoder.decode(httpUrl,"UTF-8").trim();
 
-            HttpService httpService = new HttpService();
-            //WebServer webServer = new WebServer();
-            //webServer.set(socket,outputStream,httpUrl,httpMethod);
+                String httpMethod = httpUrl.substring(0,httpUrl.indexOf(" ")).toLowerCase();
+                httpUrl = httpUrl.substring(httpUrl.indexOf(" ")+1,httpUrl.lastIndexOf("HTTP/")-1);
 
-            WebServer.FutureEXE(socket,printWriter,outputStream,bufferedReader,httpUrl);
+                if (httpMethod.equals(""))
+
+                    WebServer.FutureEXE(socket,printWriter,outputStream,bufferedReader,httpUrl);
+            }catch (Exception exception) {
+                WebServiceServer webServiceServer = new WebServiceServer();
+                webServiceServer.sendFile(Main.ERROR_Page+"/400.html",400,printWriter,socket,outputStream);
+            }
         }
         catch (Exception exception) {
         }
@@ -105,7 +123,8 @@ public class WebServer {
             BufferedReader bufferedReader,
             String httpUrl)
             throws Exception {
-        WebServiceServer.Service(socket,printWriter,outputStream,bufferedReader,httpUrl);
+        WebServiceServer webServiceServer = new WebServiceServer();
+        webServiceServer.Service(socket,printWriter,outputStream,bufferedReader,httpUrl);
     }
     public static boolean getServerSocket(int port) {
         try{

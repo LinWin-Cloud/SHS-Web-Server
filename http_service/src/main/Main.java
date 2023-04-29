@@ -51,19 +51,4 @@ public class Main {
         }
         Main.ERROR_Page = error_page;
     }
-    public static ServerSocket GetServerSocket() {
-        try {
-            System.out.println(" [*] LINWINSOFT START HTTP SERVICE: [ "+port+" ]");
-            if (boot_number >= 10) {
-                System.exit(0);
-            }
-            ServerSocket serverSocket =
-                    new ServerSocket(port);
-            return serverSocket;
-        }
-        catch (Exception exception) {
-            boot_number += 1;
-            return GetServerSocket();
-        }
-    }
 }
