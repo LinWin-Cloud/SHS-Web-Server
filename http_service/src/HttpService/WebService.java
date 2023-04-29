@@ -138,6 +138,19 @@ class WebServiceServer {
             // System.out.println(path+";");
 
             File RequestsPath = new File(path);
+
+            String vir = Main.virtualContent.VirtualContent.get(httpUrl);
+            if (vir != null) {
+                printWriter.println("HTTP/1.1 "+200+" OK");
+                printWriter.println("Content-Type: "+new HttpFileContentType().getType(path));
+                printWriter.println("Server: "+ Main.ServerName);
+                printWriter.println("Length: "+new File(path).length());
+                printWriter.println();
+                printWriter.flush();
+                printWriter.println(vir);
+                printWriter.flush();
+                socket.close();
+            }
             if (RequestsPath.equals("/")) {
                 for (String i : Main.IndexFile)
                 {
