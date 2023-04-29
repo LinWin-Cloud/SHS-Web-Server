@@ -18,23 +18,12 @@ public class HttpService {
     private PrintWriter printWriter;
     private InputStream inputStream;
 
-    public void run() {
-        ServerSocket serverSocket = Main.GetServerSocket();
-
-        while (true) {
-            try {
-                Socket socket = serverSocket.accept();
-                Main.executorService.submit(new Callable<Integer>() {
-                    @Override
-                    public Integer call() {
-                        http_client_service(socket);
-                        return 0;
-                    }
-                });
-            } catch (IOException e) {
-                e.printStackTrace();
-                continue;
-            }
+    public void run(){
+        try {
+            WebServer webServer = new WebServer();
+            webServer.mainWebServer();
+        }catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
     private void http_client_service(Socket socket) {

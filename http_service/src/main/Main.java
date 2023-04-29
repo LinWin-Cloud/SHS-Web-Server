@@ -17,9 +17,10 @@ public class Main {
     public static String IP;
     public static String HtmlPath;
     public static String ServerName = "LinwinSoft_SHS";
+    public static String ERROR_Page;
     public static SimpleJson Http_Service_Config = new SimpleJson();
     public static HttpService httpService = new HttpService();
-    public static ExecutorService executorService = Executors.newFixedThreadPool(100);
+    public static ExecutorService executorService = Executors.newFixedThreadPool(1000);
     public static HashSet<String> IndexFile = new HashSet<>();
     public static String Charset;
 
@@ -42,6 +43,13 @@ public class Main {
         }
         Main.HtmlPath = HTML_Path;
         Main.Charset = Http_Service_Config.get("charset");
+
+        String error_page = Http_Service_Config.get("error_page");
+        if (!new File(error_page).isDirectory()) {
+            System.out.println("[ERR] CAN NOT FIND TARGET ERROR PAGE DIR: "+HTML_Path);
+            System.exit(1);
+        }
+        Main.ERROR_Page = error_page;
     }
     public static ServerSocket GetServerSocket() {
         try {
