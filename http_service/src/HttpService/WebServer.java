@@ -63,7 +63,7 @@ public class WebServer {
                             Socket socket = serverSocket.accept();
                             Future<Integer> future = Main.executorService.submit(new Callable<Integer>() {
                                 @Override
-                                public Integer call() throws Exception {
+                                public Integer call(){
                                     runEXE(socket);
                                     return 0;
                                 }

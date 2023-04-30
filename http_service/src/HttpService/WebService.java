@@ -1,12 +1,15 @@
 package HttpService;
 
 
+import HttpService.HTML.VirtualWebObject;
 import main.Main;
 
 import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
+
+import static main.Main.virtualContent;
 
 class WebServiceServer {
 
@@ -135,19 +138,18 @@ class WebServiceServer {
             }
             String path = Main.HtmlPath + Http;
             path = path.replace("//", "/");
-            // System.out.println(path+";");
 
             File RequestsPath = new File(path);
+            VirtualWebObject virtualWebObject = virtualContent.VirtualContent.get(httpUrl);
 
-            String vir = Main.virtualContent.VirtualContent.get(httpUrl);
-            if (vir != null) {
+            if (virtualWebObject != null) {
                 printWriter.println("HTTP/1.1 "+200+" OK");
-                printWriter.println("Content-Type: "+new HttpFileContentType().getType(path));
+                printWriter.println("Content-Type: "+virtualWebObject.getContent_type());
                 printWriter.println("Server: "+ Main.ServerName);
                 printWriter.println("Length: "+new File(path).length());
                 printWriter.println();
                 printWriter.flush();
-                printWriter.println(vir);
+                printWriter.println(virtualWebObject.getContent());
                 printWriter.flush();
                 socket.close();
             }

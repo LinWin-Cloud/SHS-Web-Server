@@ -1,5 +1,6 @@
 package HttpService.HTML;
 
+import HttpService.HttpFileContentType;
 import main.Main;
 
 import java.io.BufferedReader;
@@ -7,10 +8,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Objects;
 
 public class VirtualContent {
-    public HashMap<String,String> VirtualContent = new HashMap<>();
+    public Hashtable<String,VirtualWebObject> VirtualContent = new Hashtable<>();
 
     public void load(File Dir)  {
         String root = Dir.getAbsolutePath().replace("\\","/") + "/";
@@ -23,9 +25,12 @@ public class VirtualContent {
                     File file1 = new File(root+"/"+i);
                     if (file1.exists() && file1.isFile())
                     {
+                        VirtualWebObject virtualWebObject = new VirtualWebObject();
+                        virtualWebObject.setContent(this.GetFileContent(file1.getAbsolutePath()));
+                        virtualWebObject.setContent_type(new HttpFileContentType().getType(file1.getName()));
                         String root_path = "/";
-                        System.out.println(root_path);
-                        this.VirtualContent.put(root_path,this.GetFileContent(file1.getAbsolutePath()));
+
+                        VirtualContent.put(root_path , virtualWebObject);
                         break;
                     }
                 }
@@ -85,8 +90,11 @@ public class VirtualContent {
     public void PutRootPath(File file) throws Exception {
         String root_path = "/"+file.getAbsolutePath().substring(Main.HtmlPath.length());
         root_path = root_path.replace("//","/");
-        System.out.println(root_path);
-        this.VirtualContent.put(root_path,this.GetFileContent(file.getAbsolutePath()));
 
+        VirtualWebObject virtualWebObject = new VirtualWebObject();
+        virtualWebObject.setContent_type(new HttpFileContentType().getType(file.getName()));
+        virtualWebObject.setContent(this.GetFileContent(file.getAbsolutePath()));
+
+        VirtualContent.put(root_path,virtualWebObject);
     }
 }

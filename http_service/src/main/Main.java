@@ -1,8 +1,9 @@
 package main;
 
 
-import HttpService.HTML.VirtualContent;
+
 import HttpService.HttpService;
+import HttpService.HTML.*;
 
 import java.io.File;
 import java.net.InetAddress;
