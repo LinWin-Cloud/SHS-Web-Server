@@ -99,7 +99,10 @@ class WebServiceServer {
             printWriter.println();
             printWriter.flush();
 
-            printWriter.println("<h3>IndexOF: "+path.substring(path.indexOf(Main.HtmlPath)+Main.HtmlPath.length())+"</h3>");
+            printWriter.println("<h3>IndexOF: "
+                    +path.substring(
+                            path.indexOf(Main.HtmlPath)
+                                    +Main.HtmlPath.length()) +"</h3>");
             printWriter.println("<a href='../'>Back</a><br /><br />");
             for (int i = 0 ; i < ListFiles.length ; i ++)
             {
@@ -167,6 +170,33 @@ class WebServiceServer {
                 printWriter.println(virtualWebObject.getContent());
                 printWriter.flush();
                 socket.close();
+            }
+            if (path.endsWith(".php"))
+            {
+                printWriter.println("HTTP/1.1 "+200+" OK");
+                printWriter.println(
+                        "Content-Type: "
+                                + "text/html"
+                                + " ; Charset: "+Main.Charset);
+                printWriter.println("Server: "+ Main.ServerName);
+                printWriter.println("Length: "+new File(path).length());
+                printWriter.println();
+                printWriter.flush();
+
+                String cmd = "php " + RequestsPath.getAbsolutePath();
+                Process process = Runtime.getRuntime().exec(cmd);
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    printWriter.println(line);
+                    printWriter.flush();
+                }
+                socket.close();
+                printWriter.close();
+                bufferedReader.close();
+                process.destroy();
+                return;
             }
             if (RequestsPath.equals("/")) {
                 for (String i : Main.IndexFile)
