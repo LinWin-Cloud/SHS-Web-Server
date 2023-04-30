@@ -64,9 +64,12 @@ class WebServiceServer {
             String charStr = path.substring(last1,end);
             if (!charStr.equals("/"))
             {
-                printWriter.println("HTTP/1.1 200 OK");
-                printWriter.println("Content-Type: text/html");
+                printWriter.println("HTTP/1.1 "+200+" OK");
+                printWriter.println("Content-Type: text/html ; Charset: "+Main.Charset);
+                printWriter.println("Server: "+ Main.ServerName);
+                printWriter.println("Length: "+new File(path).length());
                 printWriter.println();
+                printWriter.flush();
                 printWriter.println("<script>window.location.href=window.location.href+'/';</script>");
             }
 
@@ -90,7 +93,7 @@ class WebServiceServer {
             File[] ListFiles = file.listFiles();
 
             printWriter.println("HTTP/1.1 "+code+" OK");
-            printWriter.println("Content-Type: text/html");
+            printWriter.println("Content-Type: text/html ; Charset: "+Main.Charset);
             printWriter.println("Server: "+Main.ServerName);
             printWriter.println("Length: "+new File(path).length());
             printWriter.println();
@@ -101,7 +104,11 @@ class WebServiceServer {
             for (int i = 0 ; i < ListFiles.length ; i ++)
             {
                 if (ListFiles[i].isDirectory()) {
-                    printWriter.println("<a href='./"+ListFiles[i].getName()+"/'>* Directory -- "+ListFiles[i].getName()+"</a><br />");
+                    printWriter.println(
+                            "<a href='./"+ListFiles[i].getName()
+                                    +"/'>* Directory -- "
+                                    +ListFiles[i].getName()+"</a><br />"
+                    );
                     printWriter.println();
                     printWriter.flush();
                 }
@@ -109,12 +116,17 @@ class WebServiceServer {
             for (int i = 0 ; i < ListFiles.length ; i ++)
             {
                 if (ListFiles[i].isFile()) {
-                    printWriter.println("<a href='./"+ListFiles[i].getName()+"'>* File -- "+ListFiles[i].getName()+"</a><br />");
+                    printWriter.println("<a href='./"
+                            +ListFiles[i].getName()
+                            + "'>* File -- "+ListFiles[i].getName()
+                            + "</a><br />");
                     printWriter.println();
                     printWriter.flush();
                 }
             }
-            printWriter.println("<div style='width:90%;height:3px;background-color:black></div>'");
+            printWriter.println(
+                    "<div style='width:90%;height:3px;background-color:black></div>'"
+            );
             printWriter.flush();
             printWriter.flush();
             socket.close();
@@ -144,7 +156,10 @@ class WebServiceServer {
 
             if (virtualWebObject != null) {
                 printWriter.println("HTTP/1.1 "+200+" OK");
-                printWriter.println("Content-Type: "+virtualWebObject.getContent_type());
+                printWriter.println(
+                        "Content-Type: "
+                                +virtualWebObject.getContent_type()
+                                +" ; Charset: "+Main.Charset);
                 printWriter.println("Server: "+ Main.ServerName);
                 printWriter.println("Length: "+new File(path).length());
                 printWriter.println();
@@ -160,21 +175,46 @@ class WebServiceServer {
                     if (file1.exists() && file1.isFile())
                     {
                         try{
-                            sendFile(file1.getAbsolutePath(),200,printWriter,socket,outputStream);
+                            sendFile(
+                                    file1.getAbsolutePath(),
+                                    200,
+                                    printWriter,
+                                    socket,
+                                    outputStream);
                         }catch (Exception exception)
                         {
-                            this.sendFile(Main.ERROR_Page+"/500.html",500,printWriter,socket,outputStream);
+                            this.sendFile(
+                                    Main.ERROR_Page +"/500.html",
+                                    500,
+                                    printWriter,
+                                    socket,
+                                    outputStream);
                         }
                         break;
                     }
                 }
             }
             if (RequestsPath.exists() && RequestsPath.isFile()) {
-                sendFile(path, 200, printWriter, socket, outputStream);
+                sendFile(
+                        path,
+                        200,
+                        printWriter,
+                        socket,
+                        outputStream);
             } else if (RequestsPath.exists() && RequestsPath.isDirectory()) {
-                sendDirectory(path, 200, printWriter, socket, outputStream);
+                sendDirectory(
+                        path,
+                        200,
+                        printWriter,
+                        socket,
+                        outputStream);
             } else {
-                this.sendFile(Main.ERROR_Page+"/404.html",404,printWriter,socket,outputStream);
+                this.sendFile(
+                        Main.ERROR_Page+"/404.html",
+                        404,
+                        printWriter,
+                        socket,
+                        outputStream);
             }
             bufferedReader.close();
         }
