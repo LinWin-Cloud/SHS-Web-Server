@@ -7,10 +7,7 @@ import HttpService.HTML.*;
 import main.JvmToolKit.Hotspot;
 
 import java.io.File;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,8 +27,7 @@ public class Main {
     public static boolean HttpServiceOK = false;
     public static String[] Access_Control_Allow_Origin;
     public static boolean Access_Control_Allow_Credentials;
-    public static boolean AllowGET = true;
-    public static boolean AllowPOST = true;
+    public Hashtable<String,Boolean> Access_Control_Allow_Methods = new Hashtable<>();
 
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
@@ -89,6 +85,16 @@ public class Main {
         Main.ERROR_Page = error_page;
         virtualContent.load(new File(HTML_Path));
 
-        
+        String URL = Http_Service_Config.get("Access-Control-Allow-Origin").trim();
+        List<String> list = new ArrayList<>();
+        for (String i : URL.split(","))
+        {
+            list.add(i.trim());
+        }
+        Main.Access_Control_Allow_Origin = list.toArray(new String[list.size()]);
+        Main.Access_Control_Allow_Credentials
+                = Http_Service_Config.get(
+                        "Access-Control-Allow-Credentials").toLowerCase().trim().equals("true");
+
     }
 }
