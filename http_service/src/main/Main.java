@@ -27,7 +27,7 @@ public class Main {
     public static boolean HttpServiceOK = false;
     public static String[] Access_Control_Allow_Origin;
     public static boolean Access_Control_Allow_Credentials;
-    public Hashtable<String,Boolean> Access_Control_Allow_Methods = new Hashtable<>();
+    public static Hashtable<String,Boolean> Access_Control_Allow_Methods = new Hashtable<>();
 
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
@@ -96,5 +96,10 @@ public class Main {
                 = Http_Service_Config.get(
                         "Access-Control-Allow-Credentials").toLowerCase().trim().equals("true");
 
+        String AllowMethod = Http_Service_Config.get("Access-Control-Allow-Methods");
+        for (String i : AllowMethod.split(","))
+        {
+            Main.Access_Control_Allow_Methods.put(i.trim(),true);
+        }
     }
 }
