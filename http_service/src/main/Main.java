@@ -30,6 +30,7 @@ public class Main {
     public static boolean Access_Control_Allow_Credentials;
     public static Hashtable<String,Boolean> Access_Control_Allow_Methods = new Hashtable<>();
     public static int ddos_requests;
+    public static HashMap<String,Integer> RequestsIP = new HashMap<>();
 
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
@@ -59,7 +60,8 @@ public class Main {
         });
         jvm_hotspot.start();
         DDOS ddos = new DDOS();
-        ddos.setAllowRequests();
+        ddos.setAllowRequests(Main.ddos_requests);
+        ddos.DDOS_Safe_Run();
         httpService.run();
     }
     public static void LoadConfig()
