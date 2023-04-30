@@ -6,7 +6,6 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -21,22 +20,6 @@ public class WebServer {
 
     public Socket socket = null;
     public OutputStream outputStream = null;
-    public String getHttpUrl() {
-        return this.httpUrl;
-    }
-    public String getHttpMethod() {
-        return this.httpMethod;
-    }
-    public HttpService getHttpService() {
-        return this.httpService;
-    }
-    public Socket getSocket()
-    {
-        return this.socket;
-    }
-    public OutputStream getOutputStream() {
-        return this.outputStream;
-    }
 
 
     public void set(Socket socket,OutputStream outputStream,String HttpUrl,String HttpMethod) {
@@ -52,29 +35,22 @@ public class WebServer {
         ServerSocket serverSocket = new ServerSocket();
         serverSocket.bind(new InetSocketAddress(Main.IP,Main.port));
         System.out.println(" [INFO] START WEB SERVER ["+Main.port+"]");
+        Main.HttpServiceOK = true;
 
-        for (int i = 0 ; i < 5 ; i++) {
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (true)
-                    {
-                        try {
-                            Socket socket = serverSocket.accept();
-                            Future<Integer> future = Main.executorService.submit(new Callable<Integer>() {
-                                @Override
-                                public Integer call(){
-                                    runEXE(socket);
-                                    return 0;
-                                }
-                            });
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+        while (true)
+        {
+            try {
+                Socket socket = serverSocket.accept();
+                Future<Integer> future = Main.executorService.submit(new Callable<Integer>() {
+                    @Override
+                    public Integer call(){
+                        runEXE(socket);
+                        return 0;
                     }
-                }
-            });
-            thread.start();
+                });
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public static void runEXE(Socket socket) {
@@ -133,9 +109,10 @@ public class WebServer {
             serverSocket.close();
         }
         catch (Exception exception) {
+            System.out.println(" [ERR] Bind Port: "+Main.port);
             WebServer.Start_Test = WebServer.Start_Test + 1;
             try {
-                if (WebServer.Start_Test == 5) {
+                if (WebServer.Start_Test >= 10) {
                     System.exit(0);
                 }
                 Thread.sleep(200);

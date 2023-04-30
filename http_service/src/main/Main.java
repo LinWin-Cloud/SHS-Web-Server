@@ -4,6 +4,7 @@ package main;
 
 import HttpService.HttpService;
 import HttpService.HTML.*;
+import main.JvmToolKit.Hotspot;
 
 import java.io.File;
 import java.net.InetAddress;
@@ -22,13 +23,33 @@ public class Main {
     public static String ERROR_Page;
     public static SimpleJson Http_Service_Config = new SimpleJson();
     public static HttpService httpService = new HttpService();
-    public static ExecutorService executorService = Executors.newFixedThreadPool(1000);
+    public static ExecutorService executorService = Executors.newFixedThreadPool(5000);
     public static HashSet<String> IndexFile = new HashSet<>();
     public static String Charset;
     public static VirtualContent virtualContent = new VirtualContent();
+    public static boolean HttpServiceOK = false;
 
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
+        Thread jvm_hotspot = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(50);
+                        if (HttpServiceOK) {
+                            Hotspot hotspot = new Hotspot();
+                            hotspot.NetWork_Hotspot();
+                            break;
+                        }
+                    }
+                    catch (Exception exception){
+                        exception.printStackTrace();
+                    }
+                }
+            }
+        });
+        jvm_hotspot.start();
         httpService.run();
     }
     public static void LoadConfig() {
