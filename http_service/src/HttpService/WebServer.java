@@ -6,23 +6,25 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 public class WebServer {
-    private static int EXE_Boot = 0;
 
     public static int Start_Test = 0;
     public String httpUrl = null;
     public String httpMethod = "GET";
-    public HttpService httpService = null;
-
     public Socket socket = null;
     public OutputStream outputStream = null;
 
 
-    public void set(Socket socket,OutputStream outputStream,String HttpUrl,String HttpMethod) {
+    public void set(
+            Socket socket,
+            OutputStream outputStream,
+            String HttpUrl,
+            String HttpMethod) {
         this.socket = socket;
         this.outputStream = outputStream;
         this.httpUrl = HttpUrl;
@@ -33,7 +35,10 @@ public class WebServer {
     {
         WebServer.getServerSocket(Main.port);
         ServerSocket serverSocket = new ServerSocket();
-        serverSocket.bind(new InetSocketAddress(Main.IP,Main.port));
+        serverSocket.bind(
+                new InetSocketAddress(
+                        Main.IP,
+                        Main.port));
         System.out.println(" [INFO] START WEB SERVER ["+Main.port+"]");
         Main.HttpServiceOK = true;
 
@@ -41,7 +46,8 @@ public class WebServer {
         {
             try {
                 Socket socket = serverSocket.accept();
-                Future<Integer> future = Main.executorService.submit(new Callable<Integer>() {
+                Future<Integer> future =
+                        Main.executorService.submit(new Callable<Integer>() {
                     @Override
                     public Integer call(){
                         runEXE(socket);
@@ -55,42 +61,77 @@ public class WebServer {
     }
     public static void runEXE(Socket socket) {
         try {
-
             OutputStream outputStream = socket.getOutputStream();
             InputStream inputStream = socket.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
+            BufferedReader bufferedReader = new BufferedReader(
+                            new InputStreamReader(
+                                    inputStream,
+                                    "UTF-8"));
             PrintWriter printWriter = new PrintWriter(outputStream);
-
             ArrayList<String> HttpTitle = new ArrayList<>();
-
-            while (true) {
+            while (true)
+            {
                 String line = bufferedReader.readLine();
-                if (line == null) {
+                if (line == null)
+                {
                     socket.close();
                     return;
                 }
-                if (line.equals("") || line.equals(" ")) {
+                if (line.equals("") || line.equals(" "))
+                {
                     break;
                 }
                 HttpTitle.add(line);
             }
-
-            try {
+            try
+            {
                 String httpUrl = HttpTitle.get(0);
-                httpUrl = java.net.URLDecoder.decode(httpUrl,"UTF-8").trim();
+                httpUrl = URLDecoder.decode(
+                        httpUrl,
+                        "UTF-8").trim();
 
-                String httpMethod = httpUrl.substring(0,httpUrl.indexOf(" ")).toLowerCase();
-                httpUrl = httpUrl.substring(httpUrl.indexOf(" ")+1,httpUrl.lastIndexOf("HTTP/")-1);
+                String httpMethod = httpUrl.substring(0,
+                        httpUrl.indexOf(" ")).toLowerCase();
 
-                if (httpMethod.equals("get")) {
-                    WebServer.FutureEXE(socket,printWriter,outputStream,bufferedReader,httpUrl);
+                httpUrl = httpUrl.substring(
+                        httpUrl.indexOf(" ")+1,
+                        httpUrl.lastIndexOf("HTTP/")-1);
+
+                if (httpMethod.equals("get"))
+                {
+                    WebServer.FutureEXE(
+                            socket,
+                            printWriter,
+                            outputStream,
+                            bufferedReader,
+                            httpUrl);
                 }
-            }catch (Exception exception) {
+            }catch (Exception exception)
+            {
                 WebServiceServer webServiceServer = new WebServiceServer();
-                webServiceServer.sendFile(Main.ERROR_Page+"/400.html",400,printWriter,socket,outputStream);
+                webServiceServer.sendFile(
+                        Main.ERROR_Page+"/400.html",
+                        400,printWriter,socket,outputStream);
             }
         }
         catch (Exception exception) {
+        }
+    }
+    public static void getServerSocket(int port) throws InterruptedException
+    {
+        try
+        {
+            ServerSocket serverSocket = new ServerSocket(port);
+            serverSocket.close();
+        }
+        catch (Exception exception)
+        {
+            System.out.println(" [ERR] Bind Port: "+Main.port);
+            Thread.sleep(200);
+            if (Main.port >= 10) {
+                System.exit(1);
+            }
+            getServerSocket(port);
         }
     }
     public static void FutureEXE(
@@ -103,25 +144,4 @@ public class WebServer {
         WebServiceServer webServiceServer = new WebServiceServer();
         webServiceServer.Service(socket,printWriter,outputStream,bufferedReader,httpUrl);
     }
-    public static boolean getServerSocket(int port) {
-        try{
-            ServerSocket serverSocket = new ServerSocket(port);
-            serverSocket.close();
-        }
-        catch (Exception exception) {
-            System.out.println(" [ERR] Bind Port: "+Main.port);
-            WebServer.Start_Test = WebServer.Start_Test + 1;
-            try {
-                if (WebServer.Start_Test >= 10) {
-                    System.exit(0);
-                }
-                Thread.sleep(200);
-                WebServer.getServerSocket(port);
-            }catch(Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return true;
-    }
-
 }

@@ -31,19 +31,25 @@ public class Main {
 
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
-        Thread jvm_hotspot = new Thread(new Runnable() {
+        Thread jvm_hotspot =
+                new Thread(new Runnable()
+                {
             @Override
-            public void run() {
+            public void run()
+            {
                 while (true) {
-                    try {
+                    try
+                    {
                         Thread.sleep(50);
-                        if (HttpServiceOK) {
+                        if (HttpServiceOK)
+                        {
                             Hotspot hotspot = new Hotspot();
                             hotspot.NetWork_Hotspot();
                             break;
                         }
                     }
-                    catch (Exception exception){
+                    catch (Exception exception)
+                    {
                         exception.printStackTrace();
                     }
                 }
@@ -52,7 +58,8 @@ public class Main {
         jvm_hotspot.start();
         httpService.run();
     }
-    public static void LoadConfig() {
+    public static void LoadConfig()
+    {
         Http_Service_Config.setFile("../config/http_service.json");
         port = Integer.parseInt(Http_Service_Config.get("port"));
         IP = Http_Service_Config.get("IP");
@@ -61,7 +68,8 @@ public class Main {
         IndexFile.addAll(Arrays.asList(Index));
 
         String HTML_Path = Http_Service_Config.get("html");
-        if (!new File(HTML_Path).isDirectory()) {
+        if (!new File(HTML_Path).isDirectory())
+        {
             System.out.println("[ERR] CAN NOT FIND TARGET SERVICE DIR: "+HTML_Path);
             System.exit(1);
         }
@@ -69,7 +77,8 @@ public class Main {
         Main.Charset = Http_Service_Config.get("charset");
 
         String error_page = Http_Service_Config.get("error_page");
-        if (!new File(error_page).isDirectory()) {
+        if (!new File(error_page).isDirectory())
+        {
             System.out.println("[ERR] CAN NOT FIND TARGET ERROR PAGE DIR: "+HTML_Path);
             System.exit(1);
         }
