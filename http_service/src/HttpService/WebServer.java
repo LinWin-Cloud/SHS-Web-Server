@@ -97,7 +97,8 @@ public class WebServer {
                         httpUrl.indexOf(" ")+1,
                         httpUrl.lastIndexOf("HTTP/")-1);
 
-                if (httpMethod.equals("get"))
+                Boolean AllowMethod = Main.Access_Control_Allow_Methods.get(httpMethod);
+                if (AllowMethod != null)
                 {
                     WebServer.FutureEXE(
                             socket,
@@ -106,12 +107,23 @@ public class WebServer {
                             bufferedReader,
                             httpUrl);
                 }
+                else {
+                    WebServiceServer webServiceServer = new WebServiceServer();
+                    webServiceServer.sendFile(
+                            Main.ERROR_Page+"/405.html",
+                            405,printWriter,
+                            socket,
+                            outputStream);
+                }
             }catch (Exception exception)
             {
                 WebServiceServer webServiceServer = new WebServiceServer();
                 webServiceServer.sendFile(
                         Main.ERROR_Page+"/400.html",
-                        400,printWriter,socket,outputStream);
+                        400,
+                        printWriter,
+                        socket,
+                        outputStream);
             }
         }
         catch (Exception exception) {

@@ -99,7 +99,7 @@ public class Main {
         String AllowMethod = Http_Service_Config.get("Access-Control-Allow-Methods");
         for (String i : AllowMethod.split(","))
         {
-            Main.Access_Control_Allow_Methods.put(i.trim(),true);
+            Main.Access_Control_Allow_Methods.put(i.trim().toLowerCase(),true);
         }
     }
 }
