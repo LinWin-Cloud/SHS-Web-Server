@@ -7,5 +7,7 @@
   "error_page": "../default/error/",
   "Access-Control-Allow-Origin": "",
   "Access-Control-Allow-Credentials": "false",
-  "Access-Control-Allow-Methods": "get,post"
+  "Access-Control-Allow-Methods": "get,post",
+  "php_requests" : "2000",
+  "requests": "10000"
 }
