@@ -4,6 +4,7 @@ package main;
 
 import HttpService.HttpService;
 import HttpService.HTML.*;
+import Web.Safe.DDOS;
 import main.JvmToolKit.Hotspot;
 
 import java.io.File;
@@ -28,6 +29,7 @@ public class Main {
     public static String Access_Control_Allow_Origin;
     public static boolean Access_Control_Allow_Credentials;
     public static Hashtable<String,Boolean> Access_Control_Allow_Methods = new Hashtable<>();
+    public static int ddos_requests;
 
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
@@ -56,6 +58,8 @@ public class Main {
             }
         });
         jvm_hotspot.start();
+        DDOS ddos = new DDOS();
+        ddos.setAllowRequests();
         httpService.run();
     }
     public static void LoadConfig()
@@ -96,5 +100,6 @@ public class Main {
         {
             Main.Access_Control_Allow_Methods.put(i.trim().toLowerCase(),true);
         }
+        Main.ddos_requests = Integer.parseInt(Http_Service_Config.get("requests"));
     }
 }
