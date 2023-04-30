@@ -28,6 +28,10 @@ public class Main {
     public static String Charset;
     public static VirtualContent virtualContent = new VirtualContent();
     public static boolean HttpServiceOK = false;
+    public static String[] Access_Control_Allow_Origin;
+    public static boolean Access_Control_Allow_Credentials;
+    public static boolean AllowGET = true;
+    public static boolean AllowPOST = true;
 
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
@@ -83,7 +87,8 @@ public class Main {
             System.exit(1);
         }
         Main.ERROR_Page = error_page;
-
         virtualContent.load(new File(HTML_Path));
+
+        
     }
 }
