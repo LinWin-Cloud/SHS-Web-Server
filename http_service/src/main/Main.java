@@ -25,7 +25,7 @@ public class Main {
     public static String Charset;
     public static VirtualContent virtualContent = new VirtualContent();
     public static boolean HttpServiceOK = false;
-    public static String[] Access_Control_Allow_Origin;
+    public static String Access_Control_Allow_Origin;
     public static boolean Access_Control_Allow_Credentials;
     public static Hashtable<String,Boolean> Access_Control_Allow_Methods = new Hashtable<>();
 
@@ -86,12 +86,7 @@ public class Main {
         virtualContent.load(new File(HTML_Path));
 
         String URL = Http_Service_Config.get("Access-Control-Allow-Origin").trim();
-        List<String> list = new ArrayList<>();
-        for (String i : URL.split(","))
-        {
-            list.add(i.trim());
-        }
-        Main.Access_Control_Allow_Origin = list.toArray(new String[list.size()]);
+        Main.Access_Control_Allow_Origin = URL;
         Main.Access_Control_Allow_Credentials
                 = Http_Service_Config.get(
                         "Access-Control-Allow-Credentials").toLowerCase().trim().equals("true");

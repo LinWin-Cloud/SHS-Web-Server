@@ -24,6 +24,8 @@ class WebServiceServer {
         printWriter.println("Content-Type: "+new HttpFileContentType().getType(path));
         printWriter.println("Server: "+ Main.ServerName);
         printWriter.println("Length: "+new File(path).length());
+        printWriter.println("Access-Control-Allow-Origin: "+Main.Access_Control_Allow_Origin);
+        printWriter.println("Access-Control-Allow-Credentials: "+Main.Access_Control_Allow_Credentials);
         printWriter.println();
         printWriter.flush();
 
@@ -68,6 +70,8 @@ class WebServiceServer {
                 printWriter.println("Content-Type: text/html ; Charset: "+Main.Charset);
                 printWriter.println("Server: "+ Main.ServerName);
                 printWriter.println("Length: "+new File(path).length());
+                printWriter.println("Access-Control-Allow-Origin: "+Main.Access_Control_Allow_Origin);
+                printWriter.println("Access-Control-Allow-Credentials: "+Main.Access_Control_Allow_Credentials);
                 printWriter.println();
                 printWriter.flush();
                 printWriter.println("<script>window.location.href=window.location.href+'/';</script>");
@@ -96,6 +100,8 @@ class WebServiceServer {
             printWriter.println("Content-Type: text/html ; Charset: "+Main.Charset);
             printWriter.println("Server: "+Main.ServerName);
             printWriter.println("Length: "+new File(path).length());
+            printWriter.println("Access-Control-Allow-Origin: "+Main.Access_Control_Allow_Origin);
+            printWriter.println("Access-Control-Allow-Credentials: "+Main.Access_Control_Allow_Credentials);
             printWriter.println();
             printWriter.flush();
 
@@ -165,6 +171,8 @@ class WebServiceServer {
                                 +" ; Charset: "+Main.Charset);
                 printWriter.println("Server: "+ Main.ServerName);
                 printWriter.println("Length: "+new File(path).length());
+                printWriter.println("Access-Control-Allow-Origin: "+Main.Access_Control_Allow_Origin);
+                printWriter.println("Access-Control-Allow-Credentials: "+Main.Access_Control_Allow_Credentials);
                 printWriter.println();
                 printWriter.flush();
                 printWriter.println(virtualWebObject.getContent());
@@ -180,6 +188,8 @@ class WebServiceServer {
                                 + " ; Charset: "+Main.Charset);
                 printWriter.println("Server: "+ Main.ServerName);
                 printWriter.println("Length: "+new File(path).length());
+                printWriter.println("Access-Control-Allow-Origin: "+Main.Access_Control_Allow_Origin);
+                printWriter.println("Access-Control-Allow-Credentials: "+Main.Access_Control_Allow_Credentials);
                 printWriter.println();
                 printWriter.flush();
 
