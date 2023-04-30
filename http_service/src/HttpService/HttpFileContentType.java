@@ -18,6 +18,15 @@ public class HttpFileContentType {
             "application/octet-stream",
             "application/x-www-form-urlencoded",
 
+            "audio/x-wav",
+            "audio/x-ms-wma",
+            "audio/mp3",
+
+            "video/x-ms-wmv",
+            "video/mpeg4",
+            "video/avi",
+
+            "video/webm"
     };
     public String getType(String name) {
         try {
@@ -48,6 +57,27 @@ public class HttpFileContentType {
             }
             if (last_name.equals(".doc") || last_name.equals(".docx")) {
                 return this.ContentTypeList[9];
+            }
+            if (last_name.equals(".wav")) {
+                return this.ContentTypeList[12];
+            }
+            if (last_name.equals(".w")) {
+                return this.ContentTypeList[13];
+            }
+            if (last_name.equals(".mp3")) {
+                return this.ContentTypeList[14];
+            }
+            if (last_name.equals(".wmv")) {
+                return this.ContentTypeList[15];
+            }
+            if (last_name.equals(".mp4")) {
+                return this.ContentTypeList[16];
+            }
+            if (last_name.equals(".avi")) {
+                return this.ContentTypeList[17];
+            }
+            if (last_name.equals(".webm")) {
+                return this.ContentTypeList[18];
             }
             else {
                 return this.ContentTypeList[10];
