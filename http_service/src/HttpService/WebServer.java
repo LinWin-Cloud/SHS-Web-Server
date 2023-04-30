@@ -61,6 +61,17 @@ public class WebServer {
     }
     public static void runEXE(Socket socket) {
         try {
+            Integer RequestsVisit = Main.RequestsIP.get(socket.getInetAddress());
+            if (RequestsVisit == null) {
+                Main.RequestsIP.put(socket.getInetAddress().toString() , 1);
+            }
+            else {
+                int i = RequestsVisit;
+                if ((i+1) > Main.ddos_requests) {
+                    socket.close();
+                }
+            }
+
             OutputStream outputStream = socket.getOutputStream();
             InputStream inputStream = socket.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(
