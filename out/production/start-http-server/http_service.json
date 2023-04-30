@@ -4,5 +4,8 @@
   "default": "index.html,index.htm",
   "html": "/var/www/html/",
   "charset": "utf-8",
-  "error_page": "../default/error/"
+  "error_page": "../default/error/",
+  "Access-Control-Allow-Origin": "",
+  "Access-Control-Allow-Credentials": "false",
+  "Access-Control-Allow-Methods": "get,post"
 }
