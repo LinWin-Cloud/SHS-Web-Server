@@ -197,6 +197,7 @@ class WebServiceServer {
                             i);
                     if (i > Main.requests_php_number) {
                         socket.close();
+                        return;
                     }
                 }
                 printWriter.println("HTTP/1.1 "+200+" OK");

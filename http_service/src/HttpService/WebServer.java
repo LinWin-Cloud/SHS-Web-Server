@@ -1,5 +1,6 @@
 package HttpService;
 
+
 import main.Main;
 
 import java.io.*;
@@ -31,15 +32,25 @@ public class WebServer {
         this.httpUrl = HttpUrl;
         this.httpMethod = HttpMethod;
     }
-
+    private void setServerSocket(ServerSocket serverSocket) throws Exception {
+        if (Main.IP.trim().equals("*"))
+        {
+            serverSocket.bind(new InetSocketAddress(Main.port));
+        }
+        else {
+            serverSocket.bind(
+                    new InetSocketAddress(
+                            Main.IP,
+                            Main.port));
+        }
+        return;
+    }
     public void mainWebServer() throws Exception
     {
         WebServer.getServerSocket(Main.port);
         ServerSocket serverSocket = new ServerSocket();
-        serverSocket.bind(
-                new InetSocketAddress(
-                        Main.IP,
-                        Main.port));
+        this.setServerSocket(serverSocket);
+
         System.out.println(" [INFO] START WEB SERVER ["+Main.port+"]");
         Main.HttpServiceOK = true;
 

@@ -2,7 +2,10 @@ package main.JvmToolKit;
 
 import main.Main;
 
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.net.Socket;
 import java.net.URL;
 
 public class Hotspot {
@@ -14,13 +17,21 @@ public class Hotspot {
          * [Notice] this function only use by network.
          */
         try {
-            URL url = new URL("http://localhost:"+ Main.port);
-            for (int i = 0 ; i < 100 ; i++)
+            String IP = Main.IP;
+            if (IP.trim().equals("*")) {
+                IP = "127.0.0.1";
+            }
+            for (int i = 0 ; i < 500 ; i++)
             {
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("GET");
-                httpURLConnection.connect();
-                httpURLConnection.disconnect();
+                Socket socket = new Socket(IP , Main.port);
+                OutputStream outputStream = socket.getOutputStream();
+                PrintWriter printWriter = new PrintWriter(outputStream);
+                printWriter.println("GET / HTTP/1.1");
+                printWriter.println();
+                printWriter.flush();
+                printWriter.close();
+                socket.close();
+                outputStream.close();
             }
         }
         catch (Exception e) {
