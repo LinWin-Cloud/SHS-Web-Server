@@ -182,6 +182,23 @@ class WebServiceServer {
             }
             if (path.endsWith(".php"))
             {
+                Integer RequestsVisit = Main.PHP_Requests.get(
+                        socket.getInetAddress().toString());
+                if (RequestsVisit == null) {
+                    Main.PHP_Requests.put(
+                            socket.getInetAddress().toString(),
+                            1
+                    );
+                }
+                else {
+                    int i = RequestsVisit + 1;
+                    Main.PHP_Requests.put(
+                            socket.getInetAddress().toString() ,
+                            i);
+                    if (i > Main.requests_php_number) {
+                        socket.close();
+                    }
+                }
                 printWriter.println("HTTP/1.1 "+200+" OK");
                 printWriter.println(
                         "Content-Type: "

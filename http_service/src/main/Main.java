@@ -34,38 +34,6 @@ public class Main {
     public static Hashtable<String,Integer> PHP_Requests = new Hashtable<>();
     public static int requests_php_number;
 
-    public static void main(String[] args) {
-        LoadConfig(); // load all the config file and project to the jvm
-        Thread jvm_hotspot =
-                new Thread(new Runnable()
-                {
-            @Override
-            public void run()
-            {
-                while (true) {
-                    try
-                    {
-                        Thread.sleep(50);
-                        if (HttpServiceOK)
-                        {
-                            Hotspot hotspot = new Hotspot();
-                            hotspot.NetWork_Hotspot();
-                            break;
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        exception.printStackTrace();
-                    }
-                }
-            }
-        });
-        jvm_hotspot.start();
-        DDOS ddos = new DDOS();
-        ddos.setAllowRequests(Main.ddos_requests);
-        ddos.DDOS_Safe_Run();
-        httpService.run();
-    }
     public static void LoadConfig()
     {
         Http_Service_Config.setFile("../config/http_service.json");
@@ -92,6 +60,7 @@ public class Main {
         }
         Main.ERROR_Page = error_page;
         virtualContent.load(new File(HTML_Path));
+        virtualContent.reload_onTime();
 
         String URL = Http_Service_Config.get("Access-Control-Allow-Origin").trim();
         Main.Access_Control_Allow_Origin = URL;
@@ -107,5 +76,37 @@ public class Main {
         Main.ddos_requests = Integer.parseInt(Http_Service_Config.get("requests"));
         Main.requests_php_number = Integer.parseInt(Http_Service_Config.get("php_requests"));
 
+    }
+    public static void main(String[] args) {
+        LoadConfig(); // load all the config file and project to the jvm
+        Thread jvm_hotspot =
+                new Thread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        while (true) {
+                            try
+                            {
+                                Thread.sleep(50);
+                                if (HttpServiceOK)
+                                {
+                                    Hotspot hotspot = new Hotspot();
+                                    hotspot.NetWork_Hotspot();
+                                    break;
+                                }
+                            }
+                            catch (Exception exception)
+                            {
+                                exception.printStackTrace();
+                            }
+                        }
+                    }
+                });
+        jvm_hotspot.start();
+        DDOS ddos = new DDOS();
+        ddos.setAllowRequests(Main.ddos_requests);
+        ddos.DDOS_Safe_Run();
+        httpService.run();
     }
 }

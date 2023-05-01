@@ -97,4 +97,23 @@ public class VirtualContent {
 
         VirtualContent.put(root_path,virtualWebObject);
     }
+    public void reload_onTime(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true)
+                {
+                    try {
+                        Thread.sleep(60 * 1000);
+                        VirtualContent.clear();
+                        load(new File(Main.HtmlPath));
+                    }
+                    catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread.start();
+    }
 }
