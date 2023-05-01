@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LinwinSoft SHS Default Page</title>
+</head>
+<body style="margin: 20px;padding: 20px">
+    <h1>
+        LinwinSoft SHS
+    </h1>
+    <p>
+        <br />
+        This is a default page of the SHS server. You can put the html,css,js file on '/var/web/www/'
+        <p style="background-color: black;color: white;padding: 10px;box-shadow:0px 0px 5px black;">Configure</p>
+        <br />
+    </p>
+    <p>
+        1. Edit /usr/SHS/config/http_service.json
+    </p>
+    <p>
+        The content in the file:
+        <pre style="overflow:scroll;color: black;padding: 10px;background-color: #F5F6F7;box-shadow: 0px 0px 5px black">
+        {
+            "port": "8888",
+            "IP": "127.0.0.1",
+            "default": "index.html,index.htm",
+            "html": "/home/ubuntu-linux/start-http-server/default",
+            "charset": "utf-8",
+            "error_page": "../default/error/",
+            "Access-Control-Allow-Origin": "",
+            "Access-Control-Allow-Credentials": "false"
+            "Access-Control-Allow-Methods": "get,post",
+            "php_requests" : "1000",
+            "requests": "1000000"
+        }
+    </pre>
+    </p>
+    <p>
+        2. Input Command in the Terminal: <a style="background-color: black;color: white"> shs start </a> Then will start SHS.
+    </p>
+    <p style="background-color: black;color: white;padding: 10px;box-shadow:0px 0px 5px black;">Documents</p>
+    <a href="https://gitee.com/LinWin-Cloud/start-http-server/wiki/home">https://gitee.com/LinWin-Cloud/start-http-server/wiki/home</a>
+</body>
+</html>
