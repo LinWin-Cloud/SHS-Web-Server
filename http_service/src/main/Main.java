@@ -33,6 +33,7 @@ public class Main {
     public static Hashtable<String,Integer> RequestsIP = new Hashtable<>();
     public static Hashtable<String,Integer> PHP_Requests = new Hashtable<>();
     public static int requests_php_number;
+    public static LogService logService = new LogService();
 
     public static void LoadConfig()
     {
@@ -79,6 +80,17 @@ public class Main {
     }
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
+
+        Thread log = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                logService.setPath("../logs/");
+                logService.setFileName("shs_log_");
+                logService.run();
+            }
+        });
+        log.start();
+
         Thread jvm_hotspot =
                 new Thread(new Runnable()
                 {
@@ -107,6 +119,7 @@ public class Main {
         DDOS ddos = new DDOS();
         ddos.setAllowRequests(Main.ddos_requests);
         ddos.DDOS_Safe_Run();
+
         httpService.run();
     }
 }
