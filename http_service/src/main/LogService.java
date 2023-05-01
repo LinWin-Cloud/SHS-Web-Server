@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.io.File;
 import java.util.HashSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class LogService {
     private int NewFileWrite_Time = 1000 * 60 * 60;
@@ -17,7 +18,7 @@ public class LogService {
     public String setNAME;
     public String path;
     public boolean loadOK_1 = false;
-    public ArrayList<String> log_list = new ArrayList<>();
+    public CopyOnWriteArrayList<String> log_list = new CopyOnWriteArrayList<>();
     public LogService() {
     }
     public void print(String message) {

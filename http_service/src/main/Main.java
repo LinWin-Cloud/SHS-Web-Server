@@ -81,23 +81,26 @@ public class Main {
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
 
-        Thread log = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                logService.setPath("../logs/");
-                logService.setFileName("shs_log_");
-                logService.run();
-            }
-        });
-        log.start();
-
-        Thread run_write_log = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                logService.run_write();
-            }
-        });
-        run_write_log.start();
+        /**
+            Thread log = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    logService.setPath("../logs/");
+                    logService.setFileName("shs_log_");
+                    logService.run();
+                }
+            });
+            log.start();
+         */
+        /**
+            Thread run_write_log = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    logService.run_write();
+                }
+            });
+            run_write_log.start();
+         */
 
         Thread jvm_hotspot =
                 new Thread(new Runnable()

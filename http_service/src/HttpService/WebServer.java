@@ -113,7 +113,7 @@ public class WebServer {
                 }
                 HttpTitle.add(line);
             }
-            Main.logService.SaveLog(HttpTitle.toString());
+            //Main.logService.SaveLog(HttpTitle.toString());
             try
             {
                 String httpUrl = HttpTitle.get(0);
