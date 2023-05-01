@@ -30,7 +30,9 @@ public class Main {
     public static boolean Access_Control_Allow_Credentials;
     public static Hashtable<String,Boolean> Access_Control_Allow_Methods = new Hashtable<>();
     public static int ddos_requests;
-    public static HashMap<String,Integer> RequestsIP = new HashMap<>();
+    public static Hashtable<String,Integer> RequestsIP = new Hashtable<>();
+    public static Hashtable<String,Integer> PHP_Requests = new Hashtable<>();
+    public static int requests_php_number;
 
     public static void main(String[] args) {
         LoadConfig(); // load all the config file and project to the jvm
@@ -103,5 +105,7 @@ public class Main {
             Main.Access_Control_Allow_Methods.put(i.trim().toLowerCase(),true);
         }
         Main.ddos_requests = Integer.parseInt(Http_Service_Config.get("requests"));
+        Main.requests_php_number = Integer.parseInt(Http_Service_Config.get("php_requests"));
+
     }
 }
