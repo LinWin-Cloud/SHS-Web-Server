@@ -7,6 +7,9 @@
       <sourceFolder url="file://$MODULE_DIR$/http_service/source" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/http_service/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/http_service/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/proxy_service/source" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/proxy_service/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/proxy_service/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/bin" />
       <excludeFolder url="file://$MODULE_DIR$/default" />
       <excludeFolder url="file://$MODULE_DIR$/docs" />
