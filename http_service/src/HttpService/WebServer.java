@@ -61,13 +61,14 @@ public class WebServer {
     }
     public static void runEXE(Socket socket) {
         try {
-            Integer RequestsVisit = Main.RequestsIP.get(socket.getInetAddress());
+            Integer RequestsVisit = Main.RequestsIP.get(socket.getInetAddress().toString());
             if (RequestsVisit == null) {
                 Main.RequestsIP.put(socket.getInetAddress().toString() , 1);
             }
             else {
-                int i = RequestsVisit;
-                if ((i+1) > Main.ddos_requests) {
+                int i = RequestsVisit + 1;
+                Main.RequestsIP.put(socket.getInetAddress().toString() , i);
+                if (i > Main.ddos_requests) {
                     socket.close();
                 }
             }

@@ -15,7 +15,7 @@ public class Hotspot {
          */
         try {
             URL url = new URL("http://localhost:"+ Main.port);
-            for (int i = 0 ; i < 1000 ; i++)
+            for (int i = 0 ; i < 100 ; i++)
             {
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("GET");
