@@ -1,8 +1,8 @@
 {
   "port": "8888",
-  "IP": "127.0.0.1",
+  "IP": "*",
   "default": "index.html,index.htm",
-  "html": "/home/ubuntu-linux/start-http-server/default",
+  "html": "/var/www/html",
   "charset": "utf-8",
   "error_page": "../default/error/",
   "Access-Control-Allow-Origin": "",
