@@ -178,6 +178,7 @@ class WebServiceServer {
                 printWriter.println(virtualWebObject.getContent());
                 printWriter.flush();
                 socket.close();
+                return;
             }
             if (path.endsWith(".php"))
             {

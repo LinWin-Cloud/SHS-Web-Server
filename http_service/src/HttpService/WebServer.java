@@ -7,6 +7,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -61,13 +62,19 @@ public class WebServer {
     }
     public static void runEXE(Socket socket) {
         try {
-            Integer RequestsVisit = Main.RequestsIP.get(socket.getInetAddress().toString());
+            Integer RequestsVisit = Main.RequestsIP.get(
+                    socket.getInetAddress().toString());
             if (RequestsVisit == null) {
-                Main.RequestsIP.put(socket.getInetAddress().toString() , 1);
+                Main.RequestsIP.put(
+                        socket.getInetAddress().toString(),
+                        1
+                );
             }
             else {
                 int i = RequestsVisit + 1;
-                Main.RequestsIP.put(socket.getInetAddress().toString() , i);
+                Main.RequestsIP.put(
+                        socket.getInetAddress().toString() ,
+                        i);
                 if (i > Main.ddos_requests) {
                     socket.close();
                 }
@@ -78,7 +85,7 @@ public class WebServer {
             BufferedReader bufferedReader = new BufferedReader(
                             new InputStreamReader(
                                     inputStream,
-                                    "UTF-8"));
+                                    StandardCharsets.UTF_8));
             PrintWriter printWriter = new PrintWriter(outputStream);
             ArrayList<String> HttpTitle = new ArrayList<>();
             while (true)
