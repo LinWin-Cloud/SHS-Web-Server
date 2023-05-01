@@ -9,5 +9,5 @@
   "Access-Control-Allow-Credentials": "false",
   "Access-Control-Allow-Methods": "get,post",
   "php_requests" : "2000",
-  "requests": "10000"
+  "requests": "1000"
 }
