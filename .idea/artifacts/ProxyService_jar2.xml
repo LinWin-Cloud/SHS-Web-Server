@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="start-http-server:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/start_http_server_jar</output-path>
+  <artifact type="jar" name="ProxyService:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/ProxyService_jar2</output-path>
     <root id="archive" name="start-http-server.jar">
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/bin/META-INF/MANIFEST.MF" />
