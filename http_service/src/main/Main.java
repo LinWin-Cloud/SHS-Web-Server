@@ -91,6 +91,14 @@ public class Main {
         });
         log.start();
 
+        Thread run_write_log = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                logService.run_write();
+            }
+        });
+        run_write_log.start();
+
         Thread jvm_hotspot =
                 new Thread(new Runnable()
                 {

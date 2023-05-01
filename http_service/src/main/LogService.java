@@ -2,10 +2,13 @@ package main;
 
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.io.File;
+import java.util.HashSet;
 
 public class LogService {
     private int NewFileWrite_Time = 1000 * 60 * 60;
@@ -13,6 +16,8 @@ public class LogService {
     public String fileName;
     public String setNAME;
     public String path;
+    public boolean loadOK_1 = false;
+    public ArrayList<String> log_list = new ArrayList<>();
     public LogService() {
     }
     public void print(String message) {
@@ -27,7 +32,12 @@ public class LogService {
         java.util.Date date = new Date(System.currentTimeMillis());
         return simpleDateFormat.format(date);
     }
-    public Boolean outLog(String logMessage) {
+    private String getNowTime_2() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd.HH:mm:ss");
+        java.util.Date date = new Date(System.currentTimeMillis());
+        return simpleDateFormat.format(date);
+    }
+    private boolean outLog(String logMessage) {
         try{
             File file = new File(this.fileName);
             if (!file.exists() || !file.isFile()) {
@@ -41,6 +51,9 @@ public class LogService {
             return false;
         }
     }
+    public void SaveLog(String message) {
+        this.log_list.add(message);
+    }
     public void setAutoNewLog(int time) {
         this.NewFileWrite_Time = time;
     }
@@ -53,11 +66,30 @@ public class LogService {
     }
     public void run() {
         try{
+            this.loadOK_1 = true;
             Thread logFileWriteThread = new Thread(this.WriteRunnable());
             logFileWriteThread.start();
 
         }catch (Exception exception){
             exception.printStackTrace();
+        }
+    }
+    public void run_write() {
+        while (true)
+        {
+            try {
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String i : this.log_list)
+                {
+                    stringBuilder.append(i);
+                    stringBuilder.append("\n");
+                }
+                this.outLog(stringBuilder.toString());
+                this.log_list.clear();
+                Thread.sleep(10 * 1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     private Runnable WriteRunnable() {
