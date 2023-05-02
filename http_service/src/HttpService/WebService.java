@@ -9,9 +9,7 @@ import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
 
-import static main.Main.virtualContent;
-
-class WebServiceServer {
+class WebService {
 
     public void sendFile(
             String path,
@@ -161,9 +159,11 @@ class WebServiceServer {
             path = path.replace("//", "/");
 
             File RequestsPath = new File(path);
-            VirtualWebObject virtualWebObject = virtualContent.VirtualContent.get(httpUrl);
+
+            VirtualWebObject virtualWebObject = Main.virtualContent.get(httpUrl);
 
             if (virtualWebObject != null) {
+                System.out.println(httpUrl);
                 printWriter.println("HTTP/1.1 "+200+" OK");
                 printWriter.println(
                         "Content-Type: "

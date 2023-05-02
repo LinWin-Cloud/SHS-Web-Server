@@ -136,7 +136,7 @@ public class WebServer {
                             httpUrl);
                 }
                 else {
-                    WebServiceServer webServiceServer = new WebServiceServer();
+                    WebService webServiceServer = new WebService();
                     webServiceServer.sendFile(
                             Main.ERROR_Page+"/405.html",
                             405,printWriter,
@@ -145,7 +145,7 @@ public class WebServer {
                 }
             }catch (Exception exception)
             {
-                WebServiceServer webServiceServer = new WebServiceServer();
+                WebService webServiceServer = new WebService();
                 webServiceServer.sendFile(
                         Main.ERROR_Page+"/400.html",
                         400,
@@ -181,7 +181,7 @@ public class WebServer {
             BufferedReader bufferedReader,
             String httpUrl)
             throws Exception {
-        WebServiceServer webServiceServer = new WebServiceServer();
+        WebService webServiceServer = new WebService();
         webServiceServer.Service(socket,printWriter,outputStream,bufferedReader,httpUrl);
     }
 }

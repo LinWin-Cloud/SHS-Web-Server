@@ -14,6 +14,10 @@ import java.util.Objects;
 public class VirtualContent {
     public Hashtable<String,VirtualWebObject> VirtualContent = new Hashtable<>();
 
+    public VirtualWebObject get(String key) {
+        return this.VirtualContent.get(key);
+    }
+
     public void load(File Dir)  {
         String root = Dir.getAbsolutePath().replace("\\","/") + "/";
         root = root.replace("//","/");

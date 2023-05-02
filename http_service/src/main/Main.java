@@ -74,7 +74,6 @@ public class Main {
         {
             Main.Access_Control_Allow_Methods.put(i.trim().toLowerCase(),true);
         }
-        Main.ddos_requests = Integer.parseInt(Http_Service_Config.get("requests"));
         Main.requests_php_number = Integer.parseInt(Http_Service_Config.get("php_requests"));
 
     }
@@ -115,7 +114,7 @@ public class Main {
                                 if (HttpServiceOK)
                                 {
                                     Hotspot hotspot = new Hotspot();
-                                    hotspot.NetWork_Hotspot();
+                                    //hotspot.NetWork_Hotspot();
                                     break;
                                 }
                             }
