@@ -22,7 +22,7 @@ public class Main {
     public static String ERROR_Page;
     public static SimpleJson Http_Service_Config = new SimpleJson();
     public static HttpService httpService = new HttpService();
-    public static ExecutorService executorService = Executors.newFixedThreadPool(5000);
+    public static ExecutorService executorService = Executors.newFixedThreadPool(2000);
     public static HashSet<String> IndexFile = new HashSet<>();
     public static String Charset;
     public static VirtualContent virtualContent = new VirtualContent();
@@ -34,7 +34,6 @@ public class Main {
     public static Hashtable<String,Integer> RequestsIP = new Hashtable<>();
     public static Hashtable<String,Integer> PHP_Requests = new Hashtable<>();
     public static int requests_php_number;
-    public static LogService logService = new LogService();
 
     public static void LoadConfig()
     {
@@ -128,9 +127,6 @@ public class Main {
                     }
                 });
         jvm_hotspot.start();
-        DDOS ddos = new DDOS();
-        ddos.setAllowRequests(Main.ddos_requests);
-        ddos.DDOS_Safe_Run();
 
         httpService.run();
     }

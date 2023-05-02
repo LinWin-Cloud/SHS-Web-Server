@@ -56,23 +56,19 @@ public class WebServer {
 
         while (true)
         {
-            try {
-                Socket socket = serverSocket.accept();
-                Future<Integer> future =
-                        Main.executorService.submit(new Callable<Integer>() {
-                    @Override
-                    public Integer call(){
-                        runEXE(socket);
-                        return 0;
-                    }
-                });
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            Socket socket = serverSocket.accept();
+            Future<Integer> future = Main.executorService.submit(new Callable<Integer>() {
+                @Override
+                public Integer call() throws Exception {
+                    runEXE(socket);
+                    return 0;
+                }
+            });
         }
     }
     public static void runEXE(Socket socket) {
         try {
+            /**
             Integer RequestsVisit = Main.RequestsIP.get(
                     socket.getInetAddress().toString());
             if (RequestsVisit == null) {
@@ -90,6 +86,7 @@ public class WebServer {
                     socket.close();
                 }
             }
+             */
 
             OutputStream outputStream = socket.getOutputStream();
             InputStream inputStream = socket.getInputStream();
