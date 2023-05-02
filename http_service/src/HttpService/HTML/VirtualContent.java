@@ -23,7 +23,7 @@ public class VirtualContent {
         root = root.replace("//","/");
 
         try {
-            if (root.equals(Main.HtmlPath)) {
+            if (root.equals((Main.HtmlPath+"/").replace("\\","/").replace("//","/"))) {
                 for (String i : Main.IndexFile)
                 {
                     File file1 = new File(root+"/"+i);

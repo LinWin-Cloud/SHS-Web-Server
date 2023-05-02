@@ -163,7 +163,7 @@ class WebService {
             VirtualWebObject virtualWebObject = Main.virtualContent.get(httpUrl);
 
             if (virtualWebObject != null) {
-                System.out.println(httpUrl);
+                //System.out.println(httpUrl);
                 printWriter.println("HTTP/1.1 "+200+" OK");
                 printWriter.println(
                         "Content-Type: "
