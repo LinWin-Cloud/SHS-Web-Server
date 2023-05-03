@@ -4,9 +4,7 @@ After=network.target
  
 [Service]
 Type=forking
-ExecStart=/opt/shs-server/
-ExecStop=kill -9 $(pidof redis-server)
-ExecReload=kill -9 $(pidof redis-server) && /opt/Redis-6.2.1/redis-server /root/RedisData/redis-conf.conf
+ExecStart=/opt/shs-server/default/start.sh
+ExecStop=kill -9 shs
+ExecReload=kill -9 shs && /opt/shs-server/default/start.sh
  
-[Install]
-WantedBy=multi-user.target
