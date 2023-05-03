@@ -4,7 +4,9 @@ After=network.target
  
 [Service]
 Type=forking
-ExecStart=/opt/shs-server/default/start.sh
-ExecStop=kill -9 shs
-ExecReload=kill -9 shs && /opt/shs-server/default/start.sh
+ExecStart=/usr/shs-server/default/start.sh
+ExecStop=killall -9 shs
+ExecReload=killall -9 shs && /usr/shs-server/default/start.sh
  
+[Install]
+WantedBy=multi-user.target
