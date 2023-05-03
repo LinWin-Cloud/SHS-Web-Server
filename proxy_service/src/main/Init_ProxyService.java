@@ -7,10 +7,11 @@ import java.io.FileReader;
 
 public class Init_ProxyService {
     public void init(String[] args) {
-        ProxyService.ProxyUrl = args[0];
-        ProxyService.ProxyPort = Integer.valueOf(args[1]);
+        ProxyService.simpleJson.setFile("../config/proxy_service.json");
+        ProxyService.ProxyUrl = ProxyService.simpleJson.get("proxy");
+        ProxyService.ProxyPort = Integer.parseInt(ProxyService.simpleJson.get("port"));
 
-        ProxyService.version = Init_ProxyService.getFileContent("../../config/Version.txt");
+        ProxyService.version = Init_ProxyService.getFileContent("../config/version.md");
     }
     public static String getFileContent(String name)
     {

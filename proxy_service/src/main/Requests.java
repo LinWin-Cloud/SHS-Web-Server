@@ -26,15 +26,17 @@ public class Requests {
             httpURLConnection.setInstanceFollowRedirects(true);
             httpURLConnection.setDoInput(true);
             httpURLConnection.setRequestProperty("User-Agent","Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0");
-
             httpURLConnection.connect();
 
             int status_code = httpURLConnection.getResponseCode();
             String contentType = httpURLConnection.getContentType();
+            long date = httpURLConnection.getDate();
 
-            this.printWriter.println("HTTP/1.1 "+status_code+" OK");
+            System.out.println();
+            this.printWriter.println("HTTP/1.1 "+status_code+" "+httpURLConnection.getResponseMessage());
             this.printWriter.println("Content-Type: "+contentType);
-            this.printWriter.println("Server: openLinwin/"+ProxyService.version);
+            this.printWriter.println("Server: Linwin_SHS/"+ProxyService.version);
+            this.printWriter.println("Date: "+date);
             this.printWriter.println();
             this.printWriter.flush();
 

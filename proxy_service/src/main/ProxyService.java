@@ -12,6 +12,7 @@ public class ProxyService {
     public static String ProxyUrl = "";
     public static int ProxyPort = 0;
     public static String version = "";
+    public static SimpleJson simpleJson = new SimpleJson();
 
     public static void main(String[] args)
     {
