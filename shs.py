@@ -6,6 +6,8 @@ if __name__ == "__main__":
             print(""" |-----LinwinSoft Shs Server-----|
  1- start               Start SHS.
  2- stop                Stop SHS.
+ 3. proxy_start         Start Proxy Server.
+ 4. proxy_stop          Stop Proxy Server.
  |-------------------------------|""")
             exit(0)
         if sys.argv[1] == 'start':
