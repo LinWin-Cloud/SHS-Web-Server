@@ -1,0 +1,12 @@
+[Unit]
+Description=Shs-Server
+After=network.target
+ 
+[Service]
+Type=forking
+ExecStart=/opt/shs-server/
+ExecStop=kill -9 $(pidof redis-server)
+ExecReload=kill -9 $(pidof redis-server) && /opt/Redis-6.2.1/redis-server /root/RedisData/redis-conf.conf
+ 
+[Install]
+WantedBy=multi-user.target
