@@ -1,9 +1,8 @@
-package main;
+package main.ToolKit;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.HashMap;
 
 public class SimpleJson {
     private String FilePath;
