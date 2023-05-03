@@ -1,9 +1,9 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="SHS_HttpService:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/SHS_HttpService_jar</output-path>
+  <artifact type="jar" name="start-http-server:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/start_http_server_jar</output-path>
     <root id="archive" name="start-http-server.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/bin/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/http_service/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="start-http-server" />
     </root>
