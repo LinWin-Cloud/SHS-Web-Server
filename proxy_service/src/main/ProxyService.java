@@ -1,3 +1,4 @@
+package main;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -22,7 +23,7 @@ public class ProxyService {
             if (proxyService.bootServerSocket())
             {
                 ServerSocket serverSocket = new ServerSocket(ProxyService.ProxyPort);
-                for (int i=0 ;i<16 ;i++)
+                for (int i=0 ;i<5 ;i++)
                 {
                     Thread thread = new Thread(new Runnable()
                     {
