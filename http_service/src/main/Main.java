@@ -3,9 +3,9 @@ package main;
 
 
 import HttpService.HttpService;
-import HttpService.HTML.*;
-import Web.Safe.DDOS;
 import main.JvmToolKit.Hotspot;
+import main.ToolKit.SimpleJson;
+import HttpService.HTML.*;
 
 
 import java.io.BufferedReader;
@@ -22,7 +22,7 @@ public class Main {
     public static String HtmlPath;
     public static String ServerName = "LinwinSHS/";
     public static String ERROR_Page;
-    public static SimpleJson Http_Service_Config = new SimpleJson();
+    public static main.ToolKit.SimpleJson Http_Service_Config = new SimpleJson();
     public static HttpService httpService = new HttpService();
     public static ExecutorService executorService = Executors.newFixedThreadPool(2000);
     public static HashSet<String> IndexFile = new HashSet<>();
