@@ -1,5 +1,4 @@
 {
   "port": "1145",
-  "proxy": "http://127.0.0.1/",
-  "proxy_port": "80"
+  "proxy": "http://www.bing.com/"
 }
