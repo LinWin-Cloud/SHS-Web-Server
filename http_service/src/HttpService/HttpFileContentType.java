@@ -26,7 +26,8 @@ public class HttpFileContentType {
             "video/mpeg4",
             "video/avi",
 
-            "video/webm"
+            "video/webm",
+            "text/css"
     };
     public String getType(String name) {
         try {
@@ -78,6 +79,9 @@ public class HttpFileContentType {
             }
             if (last_name.equals(".webm")) {
                 return this.ContentTypeList[18];
+            }
+            if (last_name.equals(".css")) {
+                return this.ContentTypeList[19];
             }
             else {
                 return this.ContentTypeList[10];
