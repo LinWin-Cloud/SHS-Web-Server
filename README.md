@@ -1,7 +1,9 @@
 # LinwinSHS Http Server
 
+#### 版本 2.8.0 长期稳定版本
+
 #### 介绍
-Start Http Server Web服务器系统，高性能、高并发、高效率。支持Windows、Linux、docker等，同样，也可以在replit这些云环境内部署运行，采用Java作为开发语言，稳定安全高效。
+SHS Web服务器系统，高性能、高并发、高效率。支持Windows、Linux、docker等，同样，也可以在replit这些云环境内部署运行，采用Java作为开发语言，稳定安全高效。
 包括了http服务器模块、反向代理服务器模块、快速网站调试模块。部署简单，高效，支持可视化管理运行。采用Java线程池高并发处理。
 
 #### 文档 (English)
