@@ -2,32 +2,32 @@ package HttpService;
 
 public class HttpFileContentType {
     private String[] ContentTypeList = {
-            "text/html",
-            "text/plain",
-            "text/xml",
+            "text/html",                                    //0
+            "text/plain",                                   //1
+            "text/xml",                                     //2
 
-            "image/gif",
-            "image/jpeg",
-            "image/png",
+            "image/gif",                                    //3
+            "image/jpeg",                                   //4
+            "image/png",                                    //5
 
-            "application/xml",
-            "application/json",
-            "application/pdf",
+            "application/xml",                              //6
+            "application/json",                             //7
+            "application/pdf",                              //8
 
-            "application/msword",
-            "application/octet-stream",
-            "application/x-www-form-urlencoded",
+            "application/msword",                           //9
+            "application/octet-stream",                     //10
+            "application/x-www-form-urlencoded",            //11
 
-            "audio/x-wav",
-            "audio/x-ms-wma",
-            "audio/mp3",
+            "audio/x-wav",                                  //12
+            "audio/x-ms-wma",                               //13
+            "audio/mp3",                                    //14
 
-            "video/x-ms-wmv",
-            "video/mpeg4",
-            "video/avi",
+            "video/x-ms-wmv",                               //15
+            "video/mpeg4",                                  //16
+            "video/avi",                                    //17
 
-            "video/webm",
-            "text/css"
+            "video/webm",                                   //18
+            "text/css"                                      //19
     };
     public String getType(String name) {
         try {

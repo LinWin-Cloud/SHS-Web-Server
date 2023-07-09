@@ -157,8 +157,7 @@ public class WebServer {
         catch (Exception exception) {
         }
     }
-    public static void getServerSocket(int port) throws InterruptedException
-    {
+    public static void getServerSocket(int port) throws InterruptedException {
         try
         {
             ServerSocket serverSocket = new ServerSocket(port);
