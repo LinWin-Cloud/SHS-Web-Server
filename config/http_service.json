@@ -8,5 +8,6 @@
   "Access-Control-Allow-Origin": "",
   "Access-Control-Allow-Credentials": "false",
   "Access-Control-Allow-Methods": "get,post",
-  "php_requests" : "1000"
+  "php_requests" : "1000",
+  "bootJDK": "software"
 }
