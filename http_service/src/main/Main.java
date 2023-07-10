@@ -20,7 +20,7 @@ public class Main {
     public static int port = 0;
     public static String IP;
     public static String HtmlPath;
-    public static String ServerName = "LinwinSHS/";
+    public static String ServerName = "LinwinShs/";
     public static String ERROR_Page;
     public static main.ToolKit.SimpleJson Http_Service_Config = new SimpleJson();
     public static HttpService httpService = new HttpService();

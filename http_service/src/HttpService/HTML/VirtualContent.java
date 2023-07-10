@@ -13,6 +13,7 @@ import java.util.Objects;
 
 public class VirtualContent {
     public Hashtable<String,VirtualWebObject> VirtualContent = new Hashtable<>();
+    private int load_number = 0;
 
     public VirtualWebObject get(String key) {
         return this.VirtualContent.get(key);
@@ -62,6 +63,9 @@ public class VirtualContent {
                             || last_name.equals(".js")
                             || last_name.equals(".txt"))
                     {
+                        if (this.load_number > 500) {
+                            break;
+                        }
                         this.PutRootPath(file);
                     }
                 }
@@ -108,7 +112,7 @@ public class VirtualContent {
                 while (true)
                 {
                     try {
-                        Thread.sleep(60 * 1000);
+                        Thread.sleep(10 * 1000);
                         VirtualContent.clear();
                         load(new File(Main.HtmlPath));
                     }
